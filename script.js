@@ -1,7 +1,32 @@
-var scheduleObj = {
-    09:'test',
-    10:'test2'
-}
+var scheduleObj = []
+
+init();
+
+function init() {
+    
+    $("#currentDay").text(moment().format('LLLL'));
+
+    var storedSchedule = JSON.parse(localStorage.getItem("scheduleObj"));
+    if (storedSchedule !== null) {
+        scheduleObj = storedSchedule;
+      };
+    boxColor();
+    renderSchedule();
+};
+
+function renderSchedule() {
+
+    for (var i = 0; i < scheduleObj.length; i++) {
+        var schedule = scheduleObj[i];
+
+        $("#"+String(i)).find(".description").attr('placeholder', schedule);
+    };
+};
+
+function storePlan() {
+
+    localStorage.setItem("scheduleObj", JSON.stringify(scheduleObj));
+  }
 
 function boxColor(){
 
@@ -17,15 +42,14 @@ function boxColor(){
     });
 };
 
-boxColor();
-
 document.addEventListener('click', function(event) {
-    // console.log(event.target.parentNode.id);
+
     if (event.target.nodeName === "BUTTON") {
-        console.log(event.target.parentNode.id);
-        // localStorage.setItem("9", JSON.stringify(highscoreInitials));
-        // localStorage.setItem("9", JSON.stringify(highscoreInitials));
-        
+        var index = parseInt(event.target.parentElement.id);
+        scheduleObj.splice(parseInt(index), 1,event.target.parentElement.childNodes[3].value);
+        storePlan();
     };
+    boxColor();
+    renderSchedule();
 
 });
