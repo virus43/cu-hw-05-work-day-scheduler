@@ -19,7 +19,7 @@ function renderSchedule() {
     for (var i = 0; i < scheduleObj.length; i++) {
         var schedule = scheduleObj[i];
 
-        $("#"+String(i)).find(".description").attr('placeholder', schedule);
+        $("#"+String(i)).find(".description").attr('value', schedule);
     };
 };
 
